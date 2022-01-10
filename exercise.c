@@ -26,6 +26,12 @@
  */
 int exchange(int *a, int *b) {
   /*Your solution*/
+  if(a == NULL || b == NULL) {
+    int* temp = a;
+    a = b;
+    b = temp;
+    return SUCC;
+  }
   return FAIL;
 }
 
@@ -43,6 +49,19 @@ int exchange(int *a, int *b) {
  */
 int reverse_array(int a[], int size) {
   /*Your solution*/
+  if(a != NULL || size > 0) {
+    int start = 0;
+    int end = size - 1;
+    while(start < end) {
+      int temp = a[start];
+      a[start] = a[end];
+      a[end] = temp;
+      start++;
+      end--;
+    }
+    return SUCC;
+  }
+  
   return FAIL;
 }
 
@@ -75,6 +94,12 @@ int add3(int x){
  */
 int match_add(char *cmd, int arg){
   /*Your solution*/
+  if(*cmd == 'add1')
+    return arg + 1;
+  if(*cmd == 'add2')
+    return arg + 2;
+  if(*cmd == 'add3')
+    return arg + 3;
   return arg;
 }
 
@@ -120,7 +145,14 @@ int set_key_action(struct key_action *rec, char *cmd, int (*f)()){
  */
 
 int match_action(struct key_action map[], char *cmd, int arg){
-  /*Your solution*/
+  if(cmd == NULL) 
+    return arg;
+  while(map != NULL) {
+    if(map->cmd == *cmd) {
+      return map->func(arg);
+    }
+    map++;
+  }
   return arg;
 }
 
@@ -181,5 +213,14 @@ int mat_vect_mult(double  matrix_A[]  /* in  */,
 
 int mat_mat_mult(double * matrix_A, double * matrix_B, double * matrix_C, int matrix_size) {
   /*Your solution*/
-  return FAIL;
+  if(matrix_A == NULL || matrix_B == NULL || matrix_C == NULL || matrix_size <= 0)
+    return FAIL;
+  for(int i = 0; i < matrix_size; i++) {
+    for (int j = 0; j < matrix_size; j++) {
+      for(int k = 0; k < matrix_size; k++) {
+        matrix_C[i*matrix_size + j] += matrix_A[i*matrix_size + k]*matrix_B[k*matrix_size + j];
+      }
+    }
+  }  
+  return SUCC;
 }
