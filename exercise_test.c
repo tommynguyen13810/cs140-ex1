@@ -20,8 +20,25 @@
  * If successful, return NULL 
  */
 char *exchange_test(void) {
-  /*Your solution*/
-  return "failed exchange test";
+  int* a;
+  int* b;
+  a = (int*)malloc(sizeof(int));
+  b = (int*)malloc(sizeof(int));
+  *a = 1;
+  *b = 2;
+
+  int ret = exchange(a,b);
+  mu_assert("Error in exchange_test with non-NULL values", ret == SUCC);
+  mu_assert("Error in exchange_test with result a", (*a == 2));
+  mu_assert("Error in exchange_test with result b", (*b == 1));
+  ret = exchange(NULL, b);
+  mu_assert("Error in exchange_test with NULL value", ret == FAIL);
+  ret = exchange(a, NULL);
+  mu_assert("Error in exchange_test with NULL value", ret == FAIL);
+
+  free(a);
+  free(b);
+  return NULL;
 }  
 
 /*-------------------------------------------------------------------

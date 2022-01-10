@@ -26,10 +26,10 @@
  */
 int exchange(int *a, int *b) {
   /*Your solution*/
-  if(a == NULL || b == NULL) {
-    int* temp = a;
-    a = b;
-    b = temp;
+  if(a != NULL && b != NULL) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
     return SUCC;
   }
   return FAIL;
@@ -49,7 +49,7 @@ int exchange(int *a, int *b) {
  */
 int reverse_array(int a[], int size) {
   /*Your solution*/
-  if(a != NULL || size > 0) {
+  if(a != NULL && size > 0) {
     int start = 0;
     int end = size - 1;
     while(start < end) {
@@ -94,11 +94,13 @@ int add3(int x){
  */
 int match_add(char *cmd, int arg){
   /*Your solution*/
-  if(*cmd == 'add1')
+  if(cmd == NULL) 
+    return arg;
+  if(strcmp(cmd,"add1") == 0)
     return arg + 1;
-  if(*cmd == 'add2')
+  if(strcmp(cmd,"add2") == 0)
     return arg + 2;
-  if(*cmd == 'add3')
+  if(strcmp(cmd,"add3") == 0)
     return arg + 3;
   return arg;
 }
@@ -148,7 +150,7 @@ int match_action(struct key_action map[], char *cmd, int arg){
   if(cmd == NULL) 
     return arg;
   while(map != NULL) {
-    if(map->cmd == *cmd) {
+    if(strcmp(map->cmd,cmd) == 0) {
       return map->func(arg);
     }
     map++;
