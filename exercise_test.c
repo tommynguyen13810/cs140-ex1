@@ -48,7 +48,22 @@ char *exchange_test(void) {
  */
 char *reverse_array_test(void) {
   /*Your solution*/
-  return "failed reverse_array test";
+  int* a;
+  int size = 4;
+  a = (int*)calloc(size,sizeof(int));
+  for(int i = 0; i < size;i++) {
+    a[i] = i;
+  }
+  int ret = reverse_array(a, size);
+  mu_assert("Error in reverse_array with valid inputs", ret == SUCC);
+  for(int i = 0; i < size; i++) {
+    mu_assert("Error in reverse_array with results", a[i] == size-1-i);
+  }
+  ret = reverse_array(NULL, size);
+  mu_assert("Error in reverse_array with NULL array", ret == FAIL);
+  ret = reverse_array(a, 0);
+  mu_assert("Error in reverse_array with invalid size", ret == FAIL);
+  return NULL;
 }  
 
 /*-------------------------------------------------------------------
@@ -58,7 +73,20 @@ char *reverse_array_test(void) {
  */
 char *match_add_test(void) {
   /*Your solution*/
-  return "failed match_add test";
+  int arg = 0;
+  char* cmd = "add1";
+  int ret = match_add(cmd,arg);
+  mu_assert("Error in match_add with add1",ret==1);
+  cmd = "add2";
+  ret = match_add(cmd,arg);
+  mu_assert("Error in match_add with add2",ret==2);
+  cmd = "add3";
+  ret = match_add(cmd,arg);
+  mu_assert("Error in match_add with add3",ret==3);
+  ret = match_add(NULL,arg);
+  mu_assert("Error in match_add with NULL cmd", ret==arg);
+
+  return NULL;
 }  
 
 /*-------------------------------------------------------------------
