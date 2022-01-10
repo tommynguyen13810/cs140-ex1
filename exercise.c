@@ -147,9 +147,9 @@ int set_key_action(struct key_action *rec, char *cmd, int (*f)()){
  */
 
 int match_action(struct key_action map[], char *cmd, int arg){
-  if(cmd == NULL) 
+  if(cmd == NULL || map == NULL) 
     return arg;
-  while(map != NULL) {
+  while(map->cmd != NULL) {
     if(strcmp(map->cmd,cmd) == 0) {
       return map->func(arg);
     }

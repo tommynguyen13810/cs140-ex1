@@ -140,7 +140,22 @@ struct key_action map[] = {
 
 char *match_action_test(void){
   /*Your solution*/
-  return "failed match_action test";
+  char* cmd = "del1";
+  int arg = 2;
+  int ret = match_action(map, cmd, arg);
+  mu_assert("Error in match_action with del1", ret == 1);
+  cmd = "del2";
+  ret = match_action(map, cmd, arg);
+  mu_assert("Error in match_action with del2", ret == 0);
+  cmd = "del3";
+  ret = match_action(map, cmd, arg);
+  mu_assert("Error in match_action with nonexistent cmd", ret == 2);
+  ret = match_action(map, NULL, arg);
+  mu_assert("Error in match_action with NULL cmd", ret == 2);
+  ret = match_action(NULL, cmd, arg);
+  mu_assert("Error in match_action with NULL cmd", ret == 2);
+
+  return NULL;
 }  
 
 /*-------------------------------------------------------------------
