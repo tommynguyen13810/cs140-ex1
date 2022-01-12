@@ -231,6 +231,46 @@ char *mat_vect_mult_test_null(void) {
   return  NULL;
 }  
 
+char*  test_mat(double C[], int n){
+  int i;
+  double expected=n;
+  for (i = 0; i < n; i++){
+#ifdef DEBUG1
+    printf("Expected %f actual %f in mat_vect_mult\n", expected, C[i]); 
+#endif
+    mu_assert("Error in mat_vect_mult, one mismatch", C[i] ==expected); 
+  }
+  return NULL;
+}
+
+char *mat_mat_mult_test1(int n){
+  int i,j;
+  char *msg;
+  double *A = malloc(n*n*sizeof(double));
+  double *B = malloc(n*n*sizeof(double));
+  double *C = malloc(n*n*sizeof(double));
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++) {
+      A[i*n+j]=1;
+      B[i*n+j]=1;
+      C[i*n+j]=0;
+    }
+  }
+
+  int ret=mat_mat_mult(A, B, C, n);
+  msg=test_mat(C, n);  
+  free(A);
+  free(B);
+  free(C);
+
+  if(msg !=NULL)
+    return msg;
+
+  if(ret!=SUCC)
+    return "Error in mat_vect_mult return value";
+
+  return NULL;
+}
 /*-------------------------------------------------------------------
  * Test matrix matrix multiplication 
  * If failed, return a message string showing the failed point
@@ -238,7 +278,17 @@ char *mat_vect_mult_test_null(void) {
  */
 char *mat_mat_mult_test(void){
    /* Your solution*/
-  return "failed mat_mat_mult test";
+  return mat_mat_mult_test1(2);
+}  
+
+char *mat_mat_mult_test_null(void) {
+  double A=1; 
+  int n=1;  
+  int ret=mat_mat_mult(NULL, NULL, NULL, n);
+  mu_assert("Error in mat_mat_mult, NULL input", ret ==FAIL);
+  ret=mat_mat_mult(&A, &A, &A, 0);
+  mu_assert("Error in mat_mat_mult, NULL input", ret ==FAIL);
+  return  NULL;
 }  
 
 /*-------------------------------------------------------------------
@@ -254,6 +304,7 @@ void run_all_tests(void) {
   mu_run_test(mat_vect_mult_test);
   mu_run_test(mat_vect_mult_test_null);
   mu_run_test(mat_mat_mult_test);
+  mu_run_test(mat_mat_mult_test_null);
 }
 
 /*-------------------------------------------------------------------
