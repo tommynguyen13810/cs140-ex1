@@ -63,6 +63,8 @@ char *reverse_array_test(void) {
   mu_assert("Error in reverse_array with NULL array", ret == FAIL);
   ret = reverse_array(a, 0);
   mu_assert("Error in reverse_array with invalid size", ret == FAIL);
+
+  free(a);
   return NULL;
 }  
 
@@ -267,7 +269,7 @@ char *mat_mat_mult_test1(int n){
     return msg;
 
   if(ret!=SUCC)
-    return "Error in mat_vect_mult return value";
+    return "Error in mat_mat_mult return value";
 
   return NULL;
 }
